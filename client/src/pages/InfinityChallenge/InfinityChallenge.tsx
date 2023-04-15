@@ -1,9 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
-// import { AxiosError } from "axios";
+
 import "./InfinityChallenge.css";
 import facultiesData from "./faculties.json";
-
 import infinityChallengeLogo from "./n1-whte.svg";
 import infinityChallengeLogoDefault from "./n1.svg";
 
@@ -14,7 +13,7 @@ const InfinityChallenge = () => {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
-  const [reg, setReg] = useState("");
+  const [reg_number, setRegNumber] = useState("");
 
   const faculties = facultiesData.faculties;
   const departments = faculty
@@ -40,11 +39,11 @@ const InfinityChallenge = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/api/register", {
+      const response = await axios.post("http://localhost:5000/api/students", {
         fullname,
         email,
         mobile,
-        reg,
+        reg_number,
         faculty,
         department,
         courses,
@@ -53,11 +52,9 @@ const InfinityChallenge = () => {
       alert(response.data.message);
       console.log(response.data);
     } catch (error: unknown) {
-      console.log(error);
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          alert(error.response.data.message);
-          // display error message to user
+          console.log(error.response.data.message);
         } else {
           console.log("Network error");
         }
@@ -114,13 +111,13 @@ const InfinityChallenge = () => {
                 <p className="register__form">Register for the Challenge</p>
 
                 <div className="email__container">
-                  <label htmlFor="fullname">Fullname</label>
+                  <label htmlFor="fullname">Team Name</label>
                   <input
                     type="text"
                     name="fullname"
                     id="fullname"
                     required
-                    placeholder="Cyra Doe"
+                    placeholder="John"
                     value={fullname}
                     onChange={(e) => setFullname(e.target.value)}
                   />
@@ -158,8 +155,8 @@ const InfinityChallenge = () => {
                     id="reg"
                     required
                     placeholder="11/44760X/Y"
-                    value={reg}
-                    onChange={(e) => setReg(e.target.value)}
+                    value={reg_number}
+                    onChange={(e) => setRegNumber(e.target.value)}
                   />
                 </div>
                 <div className="email__container">
